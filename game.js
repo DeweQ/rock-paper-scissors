@@ -1,7 +1,4 @@
 const hands = ["rock", "paper", "scissors"];
-let computerScore = 0;
-let humanScore = 0;
-console.log(hands.indexOf('rock'));
 
 function getComputerChoice() {
     let choice = getRandomNumber(0, 3);
@@ -12,55 +9,79 @@ function getHumanChoice() {
     return prompt("Choose your hand! Type 'rock', 'paper' or 'scissors'.");
 }
 
-function playRound(humanChoice, computerChoice) {
-    let humanWin = () => {
-        console.log("You win!");
-        humanScore++;
-        return;
+function playGame() {
+    let computerScore = 0;
+    let humanScore = 0;
+    console.log("!!!NEW GAME!!!")
+
+    for (let i = 0; i < 5; i++) {
+        console.log(`New round begins!
+            Current scores: You - ${humanScore}, Computer = ${computerScore}`);
+        playRound(getHumanChoice(), getComputerChoice());
     }
-    let computerWin = () => {
-        console.log("You lose!")
-        computerScore++;
-        return
+    console.log(`Final scores: You - ${humanScore}, Computer - ${computerScore}`);
+
+    if (humanScore > computerScore) {
+        console.log("You won the game! Congratulations!");
+    } else if (humanScore < computerScore) {
+        console.log("You lose. Try again.");
+    } else {
+        console.log("Is that a draw?!");
     }
-    let humanChoiceInsensitive = humanChoice.toLowerCase();
-    if (humanChoiceInsensitive === computerChoice) {
-        console.log("It's a draw!");
-        return;
+
+    function playRound(humanChoice, computerChoice) {
+        let humanChoiceInsensitive = humanChoice.toLowerCase();
+        let humanWin = () => {
+            console.log(`You win! "${humanChoiceInsensitive}" beats "${computerChoice}."`);
+            humanScore++;
+            return;
+        }
+        let computerWin = () => {
+            console.log(`You lose! "${computerChoice}" beats "${humanChoiceInsensitive}."`)
+            computerScore++;
+            return
+        }
+        if (humanChoiceInsensitive === computerChoice) {
+            console.log(`It's a draw! Both players got ${computerChoice}`);
+            return;
+        }
+        switch (humanChoiceInsensitive) {
+            case "rock":
+                switch (computerChoice) {
+                    case "paper":
+                        computerWin();
+                        break;
+                    case "scissors":
+                        humanWin();
+                        break;
+                }
+                break;
+            case "paper":
+                switch (computerChoice) {
+                    case "rock":
+                        humanWin();
+                        break;
+                    case "scissors":
+                        computerWin();
+                        break;
+                }
+                break;
+            case "scissors":
+                switch (computerChoice) {
+                    case "paper":
+                        humanWin();
+                        break;
+                    case "rock":
+                        computerWin();
+                        break;
+                }
+                break;
+                default:
+                    console.log("");
+                    computerScore++;    
+                    break;
+        }
     }
-    switch (humanChoiceInsensitive) {
-        case "rock":
-            switch (computerChoice) {
-                case "paper":
-                    computerWin();
-                    break;
-                case "scissors":
-                    humanWin();
-                    break;
-            }
-            break;
-        case "paper":
-            switch (computerChoice) {
-                case "rock":
-                    humanWin();
-                    break;
-                case "scissors":
-                    computerWin();
-                    break;
-            }
-            break;
-        case "scissors":
-            switch (computerChoice) {
-                case "paper":
-                    humanWin();
-                    break;
-                case "rock":
-                    computerWin();
-                    break;
-            }
-            break;
-    }
-    // if (hands.indexOf(humanChoice) > hands.indexOf(computerChoice) $$
 }
 
 function getRandomNumber(min, max) {
