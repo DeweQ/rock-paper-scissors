@@ -7,12 +7,13 @@ const playersButtonsContainer = document.querySelector(".hands");
 const scoreDiv = document.querySelector("#score");
 playersButtonsContainer.addEventListener("click", e => playRound(e.target.id, getComputerChoice()));
 playersButtonsContainer.addEventListener("click", () => scoreDiv.textContent = `Current scores: You - ${humanScore}, Computer = ${computerScore}`);
+playersButtonsContainer.addEventListener("click", () => winConditionChecker());
 const roundResultDiv = document.querySelector("#roundResult");
 
 function playRound(humanChoice, computerChoice) {
     let humanChoiceInsensitive = humanChoice.toLowerCase();
     let humanWin = () => {
-        roundResultDiv.textContent =`You win! "${humanChoiceInsensitive}" beats "${computerChoice}."`;
+        roundResultDiv.textContent = `You win! "${humanChoiceInsensitive}" beats "${computerChoice}."`;
         humanScore++;
         return;
     }
@@ -35,6 +36,19 @@ function playRound(humanChoice, computerChoice) {
     if (humanChoiceIndex == (computerChoiceIndex + 1) % 3)
         humanWin();
     else computerWin();
+}
+
+function winConditionChecker() {
+    if (humanScore >= 5)
+        alert("!!!YOU WIN!!!");
+    if (computerScore >= 5)
+        alert("!!!YOU LOSE!!!");
+    else if (humanScore < 5)
+        return;
+    humanScore = 0;
+    computerScore = 0;
+    roundResultDiv.textContent = "";
+    scoreDiv.textContent = "";
 }
 
 function getComputerChoice() {
