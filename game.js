@@ -4,26 +4,29 @@ let humanScore = 0;
 //const playersButtons = document.querySelectorAll(".players-hand-button");
 
 const playersButtonsContainer = document.querySelector(".hands");
+const scoreDiv = document.querySelector("#score");
 playersButtonsContainer.addEventListener("click", e => playRound(e.target.id, getComputerChoice()));
+playersButtonsContainer.addEventListener("click", () => scoreDiv.textContent = `Current scores: You - ${humanScore}, Computer = ${computerScore}`);
+const roundResultDiv = document.querySelector("#roundResult");
 
 function playRound(humanChoice, computerChoice) {
     let humanChoiceInsensitive = humanChoice.toLowerCase();
     let humanWin = () => {
-        console.log(`You win! "${humanChoiceInsensitive}" beats "${computerChoice}."`);
+        roundResultDiv.textContent =`You win! "${humanChoiceInsensitive}" beats "${computerChoice}."`;
         humanScore++;
         return;
     }
     let computerWin = () => {
-        console.log(`You lose! "${computerChoice}" beats "${humanChoiceInsensitive}."`)
+        roundResultDiv.textContent = `You lose! "${computerChoice}" beats "${humanChoiceInsensitive}."`;
         computerScore++;
         return;
     }
     if (humanChoiceInsensitive === computerChoice) {
-        console.log(`It's a draw! Both players got ${computerChoice}`);
+        roundResultDiv.textContent = `It's a draw! Both players got ${computerChoice}`;
         return;
     }
     if (hands.indexOf(humanChoiceInsensitive) == -1) {
-        console.log(`What an interesting weapon you got. A "${humanChoice}"! Unfortunately, it's a loss for you.`);
+        roundResultDiv.textContent = `What an interesting weapon you got. A "${humanChoice}"! Unfortunately, it's a loss for you.`;
         computerScore++;
         return;
     }
