@@ -40,7 +40,8 @@ function playRound(humanChoice, computerChoice) {
     else computerWin();
 }
 
-function winConditionChecker() {
+async function winConditionChecker() {
+    await new Promise(r => setTimeout(r, 100));
     if (humanScore >= 5)
         alert("!!!YOU WIN!!!");
     if (computerScore >= 5)
