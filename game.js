@@ -6,34 +6,29 @@ const playersButtonsContainer = document.querySelector(".hands");
 const scoreDiv = document.querySelector("#score");
 playersButtonsContainer.addEventListener("click", e => {
     if (e.target.id)
-        playRound(e.target.id, getComputerChoice())
+        playRound(e.target.id, getComputerChoice());
 });
 playersButtonsContainer.addEventListener("click", () => scoreDiv.textContent = `Current scores: You - ${humanScore}, Computer = ${computerScore}`);
 playersButtonsContainer.addEventListener("click", () => winConditionChecker());
 const roundResultDiv = document.querySelector("#roundResult");
 
 function playRound(humanChoice, computerChoice) {
-    let humanChoiceInsensitive = humanChoice.toLowerCase();
     let humanWin = () => {
-        roundResultDiv.textContent = `You win! "${humanChoiceInsensitive}" beats "${computerChoice}."`;
+        roundResultDiv.textContent = `You win! "${humanChoice}" beats "${computerChoice}."`;
         humanScore++;
         return;
     }
     let computerWin = () => {
-        roundResultDiv.textContent = `You lose! "${computerChoice}" beats "${humanChoiceInsensitive}."`;
+        roundResultDiv.textContent = `You lose! "${computerChoice}" beats "${humanChoice}."`;
         computerScore++;
         return;
     }
-    if (humanChoiceInsensitive === computerChoice) {
+    if (humanChoice === computerChoice) {
         roundResultDiv.textContent = `It's a draw! Both players got ${computerChoice}`;
         return;
     }
-    if (hands.indexOf(humanChoiceInsensitive) == -1) {
-        roundResultDiv.textContent = `What an interesting weapon you got. A "${humanChoice}"! Unfortunately, it's a loss for you.`;
-        computerScore++;
-        return;
-    }
-    let humanChoiceIndex = hands.indexOf(humanChoiceInsensitive);
+
+    let humanChoiceIndex = hands.indexOf(humanChoice);
     let computerChoiceIndex = hands.indexOf(computerChoice);
     if (humanChoiceIndex == (computerChoiceIndex + 1) % 3)
         humanWin();
@@ -57,10 +52,6 @@ async function winConditionChecker() {
 function getComputerChoice() {
     let choice = getRandomNumber(0, 3);
     return hands[choice];
-}
-
-function getHumanChoice() {
-    return prompt("Choose your hand! Type 'rock', 'paper' or 'scissors'.");
 }
 
 function getRandomNumber(min, max) {
