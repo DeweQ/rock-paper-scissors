@@ -4,7 +4,10 @@ let humanScore = 0;
 
 const playersButtonsContainer = document.querySelector(".hands");
 const scoreDiv = document.querySelector("#score");
-playersButtonsContainer.addEventListener("click", e => playRound(e.target.id, getComputerChoice()));
+playersButtonsContainer.addEventListener("click", e => {
+    if (e.target.id)
+        playRound(e.target.id, getComputerChoice())
+});
 playersButtonsContainer.addEventListener("click", () => scoreDiv.textContent = `Current scores: You - ${humanScore}, Computer = ${computerScore}`);
 playersButtonsContainer.addEventListener("click", () => winConditionChecker());
 const roundResultDiv = document.querySelector("#roundResult");
